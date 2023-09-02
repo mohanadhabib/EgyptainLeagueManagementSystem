@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -93,7 +94,14 @@ public class TeamScreen extends Application {
         captainCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCaptain().getName()));
         TableColumn<Team,Integer> scoreCol = new TableColumn<>("Score");
         scoreCol.setCellValueFactory(new PropertyValueFactory<>("totalScore"));
-        tableView.setOnMouseClicked(e->{
+        tableView.setOnKeyPressed(e -> {
+              if (e.getCode() == KeyCode.ENTER){
+                      Team team = tableView.getSelectionModel().getSelectedItem();
+                      TeamMatchesScreen.teamId = team.getId();
+                      new TeamMatchesScreen().start(new Stage());
+            }
+        });
+        tableView.setOnMouseClicked(e -> {
             if(e.getClickCount() == 2){
                 Team team = tableView.getSelectionModel().getSelectedItem();
                 TeamPlayersScreen.teamId = team.getId();

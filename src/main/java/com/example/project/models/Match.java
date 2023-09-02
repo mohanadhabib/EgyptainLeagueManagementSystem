@@ -1,12 +1,14 @@
 package com.example.project.models;
 
+import java.sql.Date;
+
 public class Match {
     private int id;
-    private String date;
+    private Date date;
     private Team firstTeam;
     private Team secondTeam;
     private String footballReferee;
-    private int score;
+    private String score;
     private String stadiumName;
 
     public int getId() {
@@ -17,11 +19,11 @@ public class Match {
         this.id = id;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -49,11 +51,11 @@ public class Match {
         this.footballReferee = footballReferee;
     }
 
-    public int getScore() {
+    public String getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(String score) {
         this.score = score;
     }
 

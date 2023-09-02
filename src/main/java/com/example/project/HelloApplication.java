@@ -1,5 +1,6 @@
 package com.example.project;
 
+import com.example.project.views.MatchScreen;
 import com.example.project.views.PlayerScreen;
 import com.example.project.views.TeamScreen;
 import javafx.application.Application;
@@ -72,6 +73,15 @@ public class HelloApplication extends Application {
         btn[2].layoutYProperty().bind(pane.heightProperty().divide(1.50));
         btn[2].minWidthProperty().bind(pane.widthProperty().divide(6));
         btn[2].minHeightProperty().bind(pane.heightProperty().divide(6));
+        btn[2].setOnAction(e->{
+            try {
+                MatchScreen matchScreen = new MatchScreen();
+                matchScreen.start(new Stage());
+                stage.close();
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+        });
     }
 
     public static void main(String[] args) {
