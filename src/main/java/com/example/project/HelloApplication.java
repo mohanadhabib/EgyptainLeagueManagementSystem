@@ -1,5 +1,6 @@
 package com.example.project;
 
+import com.example.project.views.GeneralFunctionsScreen;
 import com.example.project.views.MatchScreen;
 import com.example.project.views.PlayerScreen;
 import com.example.project.views.TeamScreen;
@@ -23,7 +24,7 @@ public class HelloApplication extends Application {
         scene = new Scene(pane,750,600);
         lblDesign();
         buttonsDesign(stage);
-        pane.getChildren().addAll(lbl,btn[0],btn[1],btn[2]);
+        pane.getChildren().addAll(lbl,btn[0],btn[1],btn[2],btn[3]);
         stage.setMinWidth(600);
         stage.setMaxWidth(900);
         stage.setMinHeight(400);
@@ -35,14 +36,14 @@ public class HelloApplication extends Application {
     public void lblDesign(){
         lbl = new Text("Egyptian League Management System");
         lbl.layoutXProperty().bind(pane.widthProperty().divide(4));
-        lbl.layoutYProperty().bind(pane.heightProperty().divide(5));
+        lbl.layoutYProperty().bind(pane.heightProperty().divide(10));
         lbl.setStyle("-fx-font-size: 22;");
     }
     public void buttonsDesign(Stage stage){
-        btn = new Button[3];
+        btn = new Button[4];
         btn[0] = new Button("Teams Page");
         btn[0].layoutXProperty().bind(pane.widthProperty().divide(4));
-        btn[0].layoutYProperty().bind(pane.heightProperty().divide(3.75));
+        btn[0].layoutYProperty().bind(pane.heightProperty().divide(6));
         btn[0].minWidthProperty().bind(pane.widthProperty().divide(6));
         btn[0].minHeightProperty().bind(pane.heightProperty().divide(6));
         btn[0].setOnAction(e->{
@@ -56,7 +57,7 @@ public class HelloApplication extends Application {
         });
         btn[1] = new Button("Players Page");
         btn[1].layoutXProperty().bind(pane.widthProperty().divide(4));
-        btn[1].layoutYProperty().bind(pane.heightProperty().divide(2.15));
+        btn[1].layoutYProperty().bind(pane.heightProperty().divide(2.65));
         btn[1].minWidthProperty().bind(pane.widthProperty().divide(6));
         btn[1].minHeightProperty().bind(pane.heightProperty().divide(6));
         btn[1].setOnAction(e->{
@@ -70,13 +71,27 @@ public class HelloApplication extends Application {
         });
         btn[2] = new Button("Matches Page");
         btn[2].layoutXProperty().bind(pane.widthProperty().divide(4));
-        btn[2].layoutYProperty().bind(pane.heightProperty().divide(1.50));
+        btn[2].layoutYProperty().bind(pane.heightProperty().divide(1.7));
         btn[2].minWidthProperty().bind(pane.widthProperty().divide(6));
         btn[2].minHeightProperty().bind(pane.heightProperty().divide(6));
         btn[2].setOnAction(e->{
             try {
                 MatchScreen matchScreen = new MatchScreen();
                 matchScreen.start(new Stage());
+                stage.close();
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+        });
+        btn[3] = new Button("General Page");
+        btn[3].layoutXProperty().bind(pane.widthProperty().divide(4));
+        btn[3].layoutYProperty().bind(pane.heightProperty().divide(1.25));
+        btn[3].minWidthProperty().bind(pane.widthProperty().divide(6));
+        btn[3].minHeightProperty().bind(pane.heightProperty().divide(6));
+        btn[3].setOnAction(e->{
+            try {
+                GeneralFunctionsScreen generalFunctionsScreen = new GeneralFunctionsScreen();
+                generalFunctionsScreen.start(new Stage());
                 stage.close();
             }catch (Exception ex){
                 ex.printStackTrace();

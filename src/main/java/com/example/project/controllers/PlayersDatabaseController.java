@@ -1,7 +1,6 @@
 package com.example.project.controllers;
 
 import com.example.project.models.*;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -13,7 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -274,7 +273,7 @@ public class PlayerScreen extends Application {
             stage.close();
         });
         pane.getChildren().addAll(lbl[0],lbl[1],lbl[2],lbl[3],lbl[4],lbl[5],lbl[6],txt[0],txt[1],txt[2],txt[3],txt[4],txt[5],radioButton[0],radioButton[1],radioButton[2],radioButton[3],submit);
-        stage.setTitle("Add Team");
+        stage.setTitle("Add Player");
         stage.setScene(scene);
         stage.show();
     }
@@ -356,7 +355,7 @@ public class PlayerScreen extends Application {
             stage.close();
         });
         pane.getChildren().addAll(lbl[0],lbl[1],lbl[2],lbl[3],lbl[4],txt[0],txt[1],txt[2],txt[3],radioButton[0],radioButton[1],radioButton[2],radioButton[3],submit);
-        stage.setTitle("Add Team");
+        stage.setTitle("Update Player");
         stage.setScene(scene);
         stage.show();
     }
@@ -393,7 +392,7 @@ public class PlayerScreen extends Application {
             stage.close();
         });
         pane.getChildren().addAll(lbl[0],lbl[1],lbl[2],txt[0],txt[1],txt[2],btn);
-        stage.setTitle("Search Team");
+        stage.setTitle("Search Player");
         stage.setScene(scene);
         stage.show();
     }
