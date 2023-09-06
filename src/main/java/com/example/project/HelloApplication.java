@@ -20,7 +20,7 @@ public class HelloApplication extends Application {
     Scene scene ;
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         pane = new Pane();
         scene = new Scene(pane,750,600);
         lblDesign();
