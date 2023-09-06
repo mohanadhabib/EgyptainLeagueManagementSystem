@@ -1,5 +1,6 @@
 package com.example.project.views;
 
+import com.example.project.HelloApplication;
 import com.example.project.controllers.GeneralFunctionsController;
 import com.example.project.models.GoalKeeperPlayer;
 import com.example.project.models.Player;
@@ -16,10 +17,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class GeneralFunctionsScreen extends Application {
+    private Text back = new Text("Back");
     private Pane pane;
     private Scene scene;
     private GeneralFunctionsController controller;
@@ -32,7 +36,20 @@ public class GeneralFunctionsScreen extends Application {
             controller = new GeneralFunctionsController();
             controller.setCon();
             mainPage();
-            pane.getChildren().addAll(btn[0],btn[1],btn[2],btn[3]);
+            back.setFont(Font.font(20));
+            back.layoutYProperty().bind(pane.heightProperty().divide(30));
+            back.layoutXProperty().bind(pane.widthProperty().divide(84));
+            back.setOnMouseClicked(e ->{
+                try {
+                    HelloApplication main = new HelloApplication();
+                    main.start(new Stage());
+                    stage.close();
+                }
+                catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            });
+            pane.getChildren().addAll(back,btn[0],btn[1],btn[2],btn[3]);
             stage.setScene(scene);
             stage.setTitle("General Page");
             stage.show();
@@ -44,25 +61,25 @@ public class GeneralFunctionsScreen extends Application {
         btn = new Button[4];
         btn[0] = new Button("Show Top 3 GoalKeepers");
         btn[0].layoutXProperty().bind(pane.widthProperty().divide(4));
-        btn[0].layoutYProperty().bind(pane.heightProperty().divide(1.15));
+        btn[0].layoutYProperty().bind(pane.heightProperty().divide(1.125));
         btn[0].minWidthProperty().bind(pane.widthProperty().divide(6));
         btn[0].minHeightProperty().bind(pane.heightProperty().divide(12));
         btn[0].setOnAction(e-> showTopThreeGoalKeepers());
         btn[1] = new Button("Show Teams By Average Ages");
         btn[1].layoutXProperty().bind(pane.widthProperty().divide(2.10));
-        btn[1].layoutYProperty().bind(pane.heightProperty().divide(1.15));
+        btn[1].layoutYProperty().bind(pane.heightProperty().divide(1.125));
         btn[1].minWidthProperty().bind(pane.widthProperty().divide(6));
         btn[1].minHeightProperty().bind(pane.heightProperty().divide(12));
         btn[1].setOnAction(e-> showTeamsByAvgAges());
         btn[2] = new Button("Show Teams By Goals");
         btn[2].layoutXProperty().bind(pane.widthProperty().divide(1.35));
-        btn[2].layoutYProperty().bind(pane.heightProperty().divide(1.15));
+        btn[2].layoutYProperty().bind(pane.heightProperty().divide(1.125));
         btn[2].minWidthProperty().bind(pane.widthProperty().divide(6));
         btn[2].minHeightProperty().bind(pane.heightProperty().divide(12));
         btn[2].setOnAction(e-> showTeamsSortedByGoals());
         btn[3] = new Button("Show Top 3 Players");
         btn[3].layoutXProperty().bind(pane.widthProperty().divide(16));
-        btn[3].layoutYProperty().bind(pane.heightProperty().divide(1.15));
+        btn[3].layoutYProperty().bind(pane.heightProperty().divide(1.125));
         btn[3].minWidthProperty().bind(pane.widthProperty().divide(6));
         btn[3].minHeightProperty().bind(pane.heightProperty().divide(12));
         btn[3].setOnAction(e-> showTopThreePlayers());
@@ -84,6 +101,7 @@ public class GeneralFunctionsScreen extends Application {
             scoreCol.setCellValueFactory(new PropertyValueFactory<>("score"));
             tableView.setItems(list);
             tableView.getColumns().addAll(idCol,teamNameCol,playerNameCol,typeCol,scoreCol);
+            tableView.layoutYProperty().bind(pane.heightProperty().divide(20));
             tableView.minWidthProperty().bind(pane.widthProperty());
             tableView.minHeightProperty().bind(pane.heightProperty().subtract(115));
             pane.getChildren().addAll(tableView);
@@ -102,6 +120,7 @@ public class GeneralFunctionsScreen extends Application {
            scoreCol.setCellValueFactory(new PropertyValueFactory<>("score"));
            goalKeeperTableView.setItems(list);
            goalKeeperTableView.getColumns().addAll(nameCol,scoreCol);
+           goalKeeperTableView.layoutYProperty().bind(pane.heightProperty().divide(20));
            goalKeeperTableView.minWidthProperty().bind(pane.widthProperty());
            goalKeeperTableView.minHeightProperty().bind(pane.heightProperty().subtract(115));
            pane.getChildren().addAll(goalKeeperTableView);
@@ -115,13 +134,14 @@ public class GeneralFunctionsScreen extends Application {
             ObservableList<TeamWithAvgAges> list = FXCollections.observableArrayList(teams);
             TableView<TeamWithAvgAges> tableView = new TableView<>(list);
             TableColumn<TeamWithAvgAges,Integer> idCol = new TableColumn<>("Team Id");
-            idCol.setCellValueFactory(new PropertyValueFactory<>("teamId"));
+            idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
             TableColumn<TeamWithAvgAges,String> nameCol = new TableColumn<>("Team Name");
-            nameCol.setCellValueFactory(new PropertyValueFactory<>("teamName"));
+            nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
             TableColumn<TeamWithAvgAges,Float> averageAgeCol = new TableColumn<>("Average Age");
             averageAgeCol.setCellValueFactory(new PropertyValueFactory<>("avgOfAges"));
             tableView.setItems(list);
             tableView.getColumns().addAll(idCol,nameCol,averageAgeCol);
+            tableView.layoutYProperty().bind(pane.heightProperty().divide(20));
             tableView.minWidthProperty().bind(pane.widthProperty());
             tableView.minHeightProperty().bind(pane.heightProperty().subtract(115));
             pane.getChildren().addAll(tableView);
@@ -135,13 +155,14 @@ public class GeneralFunctionsScreen extends Application {
             ObservableList<TeamByGoals> list = FXCollections.observableArrayList(teams);
             TableView<TeamByGoals> tableView = new TableView<>(list);
             TableColumn<TeamByGoals,Integer> idCol = new TableColumn<>("Team Id");
-            idCol.setCellValueFactory(new PropertyValueFactory<>("teamId"));
+            idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
             TableColumn<TeamByGoals,String> nameCol = new TableColumn<>("Team Name");
-            nameCol.setCellValueFactory(new PropertyValueFactory<>("teamName"));
+            nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
             TableColumn<TeamByGoals,Integer> goalsCol = new TableColumn<>("Goals");
             goalsCol.setCellValueFactory(new PropertyValueFactory<>("scoreByGoals"));
             tableView.setItems(list);
             tableView.getColumns().addAll(idCol,nameCol,goalsCol);
+            tableView.layoutYProperty().bind(pane.heightProperty().divide(20));
             tableView.minWidthProperty().bind(pane.widthProperty());
             tableView.minHeightProperty().bind(pane.heightProperty().subtract(115));
             pane.getChildren().addAll(tableView);

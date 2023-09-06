@@ -53,8 +53,8 @@ public class GeneralFunctionsController extends DatabaseOperations{
         ArrayList<TeamWithAvgAges> teams = new ArrayList<>();
         while (set.next()){
             TeamWithAvgAges team = new TeamWithAvgAges();
-            team.setTeamId(set.getInt(1));
-            team.setTeamName(set.getString(2));
+            team.setId(set.getInt(1));
+            team.setName(set.getString(2));
             team.setAvgOfAges(set.getFloat(3));
             teams.add(team);
         }
@@ -107,18 +107,17 @@ public class GeneralFunctionsController extends DatabaseOperations{
     }
     public ArrayList<TeamByGoals> getTeamsSortedByGoals() throws SQLException{
         Statement stmt = con.createStatement();
-        ResultSet set = stmt.executeQuery("select teams.id, teams.name , count(players.score) \n" +
+        ResultSet set = stmt.executeQuery("select teams.id, teams.name , SUM(players.score) \n" +
                 "from teams \n" +
                 "inner join players \n" +
                 "on players.teamId = teams.id \n" +
-                "where NOT players.type = 'goal' \n" +
                 "group by teams.id\n" +
-                "order by count(players.score) desc;");
+                "order by SUM(players.score) desc;");
         ArrayList<TeamByGoals> teams = new ArrayList<>();
         while (set.next()){
             TeamByGoals team = new TeamByGoals();
-            team.setTeamId(set.getInt(1));
-            team.setTeamName(set.getString(2));
+            team.setId(set.getInt(1));
+            team.setName(set.getString(2));
             team.setScoreByGoals(set.getInt(3));
             teams.add(team);
         }

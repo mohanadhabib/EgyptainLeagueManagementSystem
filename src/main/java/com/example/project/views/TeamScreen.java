@@ -1,5 +1,6 @@
 package com.example.project.views;
 
+import com.example.project.HelloApplication;
 import com.example.project.controllers.TeamsDatabaseController;
 import com.example.project.models.CaptainPlayer;
 import com.example.project.models.Player;
@@ -14,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.sql.SQLException;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 
 
 public class TeamScreen extends Application {
+    private Text back = new Text("Back");
     private ArrayList<Team> teams;
     private ObservableList<Team> dataList;
     private Pane pane;
@@ -38,7 +41,20 @@ public class TeamScreen extends Application {
             controller = new TeamsDatabaseController();
             controller.setCon();
             mainPage();
-            pane.getChildren().addAll(tableView,btn[0],btn[1],btn[2],btn[3]);
+            back.setFont(Font.font(20));
+            back.layoutYProperty().bind(pane.heightProperty().divide(30));
+            back.layoutXProperty().bind(pane.widthProperty().divide(84));
+            back.setOnMouseClicked(e ->{
+                try {
+                    HelloApplication main = new HelloApplication();
+                    main.start(new Stage());
+                    stage.close();
+                }
+                catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            });
+            pane.getChildren().addAll(back,tableView,btn[0],btn[1],btn[2],btn[3]);
             stage.setScene(scene);
             stage.setTitle("Teams Page");
             stage.show();
@@ -50,7 +66,7 @@ public class TeamScreen extends Application {
         btn = new Button[4];
         btn[0] = new Button("Add");
         btn[0].layoutXProperty().bind(pane.widthProperty().divide(3.25));
-        btn[0].layoutYProperty().bind(pane.heightProperty().divide(1.15));
+        btn[0].layoutYProperty().bind(pane.heightProperty().divide(1.125));
         btn[0].minWidthProperty().bind(pane.widthProperty().divide(6));
         btn[0].minHeightProperty().bind(pane.heightProperty().divide(12));
         btn[0].setOnAction(e->{
@@ -59,7 +75,7 @@ public class TeamScreen extends Application {
         });
         btn[1] = new Button("Delete");
         btn[1].layoutXProperty().bind(pane.widthProperty().divide(1.85));
-        btn[1].layoutYProperty().bind(pane.heightProperty().divide(1.15));
+        btn[1].layoutYProperty().bind(pane.heightProperty().divide(1.125));
         btn[1].minWidthProperty().bind(pane.widthProperty().divide(6));
         btn[1].minHeightProperty().bind(pane.heightProperty().divide(12));
         btn[1].setOnAction(e->{
@@ -69,7 +85,7 @@ public class TeamScreen extends Application {
         });
         btn[2] = new Button("Search");
         btn[2].layoutXProperty().bind(pane.widthProperty().divide(1.3));
-        btn[2].layoutYProperty().bind(pane.heightProperty().divide(1.15));
+        btn[2].layoutYProperty().bind(pane.heightProperty().divide(1.125));
         btn[2].minWidthProperty().bind(pane.widthProperty().divide(6));
         btn[2].minHeightProperty().bind(pane.heightProperty().divide(12));
         btn[2].setOnAction(e->{
@@ -78,7 +94,7 @@ public class TeamScreen extends Application {
         });
         btn[3] = new Button("Show All Info");
         btn[3].layoutXProperty().bind(pane.widthProperty().divide(12));
-        btn[3].layoutYProperty().bind(pane.heightProperty().divide(1.15));
+        btn[3].layoutYProperty().bind(pane.heightProperty().divide(1.125));
         btn[3].minWidthProperty().bind(pane.widthProperty().divide(6));
         btn[3].minHeightProperty().bind(pane.heightProperty().divide(12));
         btn[3].setOnAction(e->{
@@ -114,6 +130,7 @@ public class TeamScreen extends Application {
             }
         });
         tableView.getColumns().addAll(idCol,nameCol,captainCol,scoreCol);
+        tableView.layoutYProperty().bind(pane.heightProperty().divide(20));
         tableView.minWidthProperty().bind(pane.widthProperty());
         tableView.minHeightProperty().bind(pane.heightProperty().subtract(115));
         showInfo();

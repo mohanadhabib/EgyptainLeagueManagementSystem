@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 public class HelloApplication extends Application {
     Text lbl;
+    Text[] hints;
     Button[] btn;
     Pane pane;
     Scene scene ;
@@ -24,6 +25,7 @@ public class HelloApplication extends Application {
         scene = new Scene(pane,750,600);
         lblDesign();
         buttonsDesign(stage);
+        hintsDesign();
         pane.getChildren().addAll(lbl,btn[0],btn[1],btn[2],btn[3]);
         stage.setMinWidth(600);
         stage.setMaxWidth(900);
@@ -38,6 +40,25 @@ public class HelloApplication extends Application {
         lbl.layoutXProperty().bind(pane.widthProperty().divide(4));
         lbl.layoutYProperty().bind(pane.heightProperty().divide(10));
         lbl.setStyle("-fx-font-size: 22;");
+    }
+    public void hintsDesign(){
+        hints = new Text[5];
+        hints[0] = new Text("To Show Team Players Double Click The Record.");
+        hints[0].layoutXProperty().bind(pane.widthProperty().divide(2));
+        hints[0].layoutYProperty().bind(pane.widthProperty().divide(6));
+        hints[1] = new Text("To Show Team Matches Press Enter To The Record.");
+        hints[1].layoutXProperty().bind(pane.widthProperty().divide(2));
+        hints[1].layoutYProperty().bind(pane.widthProperty().divide(5));
+        hints[2] = new Text("To Update Team Info Right Click The Record.");
+        hints[2].layoutXProperty().bind(pane.widthProperty().divide(2));
+        hints[2].layoutYProperty().bind(pane.widthProperty().divide(4.30));
+        hints[3] = new Text("To Update Player Info Right Click The Record.");
+        hints[3].layoutXProperty().bind(pane.widthProperty().divide(2));
+        hints[3].layoutYProperty().bind(pane.widthProperty().divide(2.65));
+        hints[4] = new Text("To Update Match Info Right Click The Record.");
+        hints[4].layoutXProperty().bind(pane.widthProperty().divide(2));
+        hints[4].layoutYProperty().bind(pane.widthProperty().divide(1.825));
+        pane.getChildren().addAll(hints[0],hints[1],hints[2],hints[3],hints[4]);
     }
     public void buttonsDesign(Stage stage){
         btn = new Button[4];

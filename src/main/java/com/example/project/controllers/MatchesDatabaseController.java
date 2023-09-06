@@ -29,6 +29,51 @@ public class MatchesDatabaseController extends DatabaseOperations{
         String sql = "select * from teams where name = " + name;
         return super.searchByName(sql,name);
     }
+
+    @Override
+    public ResultSet searchByDate(String sqlQuery, Date date) throws SQLException {
+        String sql = "select matches.id , matches.date , matches.referee , matches.score , matches.stadium , teams.name  from matches \n" +
+                "inner join teammatch \n" +
+                "on matches.id = teammatch.matchId \n" +
+                "inner join teams \n" +
+                "on teams.id = teammatch.teamId " +
+                "where date = "+ "'" + date + "'";
+        return super.searchByDate(sql, date);
+    }
+    public ArrayList<Match> getSearch(Date date) throws SQLException{
+        String sql = "select matches.id , matches.date , matches.referee , matches.score , matches.stadium , teams.name  from matches \n" +
+                "inner join teammatch \n" +
+                "on matches.id = teammatch.matchId \n" +
+                "inner join teams \n" +
+                "on teams.id = teammatch.teamId " +
+                "where date = "+ "'" + date + "'";
+        ResultSet set = searchByDate(sql,date);
+        ArrayList<Match> matches = new ArrayList<>();
+        Match match = new Match();
+        int count = 1;
+        while (set.next()){
+            if(count % 2 != 0 ){
+                match = new Match();
+                match.setId(set.getInt(1));
+                match.setDate(set.getDate(2));
+                match.setFootballReferee(set.getString(3));
+                match.setScore(set.getString(4));
+                match.setStadiumName(set.getString(5));
+                Team firstTeam = new Team();
+                firstTeam.setName(set.getString(6));
+                match.setFirstTeam(firstTeam);
+            }
+            else if(count % 2 == 0){
+                Team secondTeam = new Team();
+                secondTeam.setName(set.getString(6));
+                match.setSecondTeam(secondTeam);
+                matches.add(match);
+            }
+            count++;
+        }
+        return matches;
+    }
+
     public Team getSearchedTeam(String sqlQuery, String name) throws SQLException{
         String sql = "select * from teams where name = " + name;
         ResultSet set = searchByName(sql,name);
@@ -114,5 +159,23 @@ public class MatchesDatabaseController extends DatabaseOperations{
         stmt.setString(3,stadium);
         stmt.setInt(4,id);
         stmt.executeQuery();
+    }
+
+    public void addMatch(int id , Date date , String referee , String score , String stadium , int firstTeamId, int secondTeamId) throws SQLException{
+        PreparedStatement stmt1 = con.prepareStatement("insert into matches(id, date, referee, score, stadium) values (?,?,?,?,?);");
+        stmt1.setInt(1,id);
+        stmt1.setDate(2,date);
+        stmt1.setString(3,referee);
+        stmt1.setString(4,score);
+        stmt1.setString(5,stadium);
+        stmt1.executeQuery();
+        PreparedStatement stmt2 = con.prepareStatement("insert into teammatch (teamId, matchId) values (?,?);");
+        stmt2.setInt(1,firstTeamId);
+        stmt2.setInt(2,id);
+        stmt2.executeQuery();
+        PreparedStatement stmt3 = con.prepareStatement("insert into teammatch (teamId, matchId) values (?,?);");
+        stmt3.setInt(1,secondTeamId);
+        stmt3.setInt(2,id);
+        stmt3.executeQuery();
     }
 }

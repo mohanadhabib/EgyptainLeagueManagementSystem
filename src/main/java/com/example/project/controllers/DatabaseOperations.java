@@ -21,4 +21,8 @@ public abstract class DatabaseOperations {
         Statement stmt = con.createStatement();
         return stmt.executeQuery(sqlQuery);
     }
+    public ResultSet searchByDate(String sqlQuery , Date date) throws SQLException{
+        Statement stmt = con.createStatement();
+        return stmt.executeQuery(sqlQuery);
+    }
 }
